@@ -1,0 +1,30 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-diyroyalties-staging-35647-authRole",
+      "UnauthRoleArn": "arn:aws:iam::589056913766:role/amplify-diyroyalties-staging-35647-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::589056913766:role/amplify-diyroyalties-staging-35647-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-diyroyalties-staging-35647-deployment",
+      "UnauthRoleName": "amplify-diyroyalties-staging-35647-unauthRole",
+      "StackName": "amplify-diyroyalties-staging-35647",
+      "StackId": "arn:aws:cloudformation:us-east-1:589056913766:stack/amplify-diyroyalties-staging-35647/40cbf580-aa31-11eb-9549-0a4a6f581873",
+      "AmplifyAppId": "dkxhf2sktx2ux"
+    },
+    "categories": {
+      "auth": {
+        "diyroyalties5fc00eb5": {}
+      },
+      "function": {
+        "diyGetRoy": {
+          "deploymentBucketName": "amplify-diyroyalties-staging-35647-deployment",
+          "s3Key": "amplify-builds/diyGetRoy-7834465253556d664936-build.zip"
+        },
+        "diyGetRoyDetails": {
+          "deploymentBucketName": "amplify-diyroyalties-staging-35647-deployment",
+          "s3Key": "amplify-builds/diyGetRoyDetails-6c4e42374c45427a526a-build.zip"
+        }
+      }
+    }
+  }
+}

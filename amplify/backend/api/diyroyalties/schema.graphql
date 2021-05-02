@@ -1,0 +1,24 @@
+type Todo @model {
+  id: ID!
+  name: String!
+  description: String
+}
+
+type Mutation {
+diyGetRoy(input: DiyGetRoyInput!): String
+    @function(name: "diyGetRoy-${env}"),
+
+diyGetRoyDetails(input: DiyGetRoyDetailsInput!): String
+    @function(name: "diyGetRoyDetails-${env}"),    
+}
+
+input DiyGetRoyInput {
+  clientId: String
+  search: String
+}
+
+
+input DiyGetRoyDetailsInput {
+  royList: String
+}
+
