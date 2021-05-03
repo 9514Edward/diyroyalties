@@ -22,7 +22,7 @@
         },
         "diyGetRoyDetails": {
           "deploymentBucketName": "amplify-diyroyalties-staging-35647-deployment",
-          "s3Key": "amplify-builds/diyGetRoyDetails-6c4e42374c45427a526a-build.zip"
+          "s3Key": "amplify-builds/diyGetRoyDetails-2b7a3364306c4a6a3731-build.zip"
         }
       }
     }

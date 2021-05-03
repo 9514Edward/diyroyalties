@@ -118,6 +118,7 @@ toggleDialog = () => {
 }
 runStatements =  async() => {
   var result;
+  var endDate = new Date(2020, 12, 31);
   if (this.state.visible) {
       this.setState({
           visible: !this.state.visible
@@ -127,41 +128,32 @@ runStatements =  async() => {
           visible: !this.state.visible
       });
   }
-  alert(JSON. stringify(this.state.selectedOptions));
   try {
-    
-    var data = await API.graphql(
-
-      graphqlOperation(diyGetRoyDetails, {
-        input: {
-          royList: this.state.selectedOptions.toString()
-        },
-        result
-      })
-    );
-    this.setState({ result: "success!" });
-    var obj = data.data.diyGetRoyDetails.toString().replace('{body=','').replace('}','');;
-    var records = JSON.parse(obj);
-    var statement = {
-      "label": "All",
-      "value": "*"
-    };
-    var statements = []
- //   statements.push(statement);
-    statements.statement = statement;
-    for (var key in records) {
-      statement = {
-        "label": records[key][3],
-        "value": records[key][1]
+    var selectedList = this.state.selectedOptions;
+    var arrayLength = selectedList.length;
+    for (var i = 0; i < arrayLength; i++) {
+        console.log(selectedList[i]);
+        var data = await API.graphql(
+         graphqlOperation(diyGetRoyDetails, {
+           input: {
+              royToGet: JSON.stringify(this.state.selectedOptions[i]),
+              endDate: endDate
+           },
+           result
+         })
+       );
+       this.setState({ result: "success!" });
+       var returnval = data.data.diyGetRoyDetails.toString().replace('{settings=','').replace('}','');
+       
+       var settings = returnval.split("invoices=")[0].replace('], ', ']');
+       var invoices = returnval.split("invoices=")[1];
+       var settingsJson = JSON.parse(settings);
+       var invoicesJson = JSON.parse(invoices);
+       alert(invoicesJson);
       }
-      statements.push(statement);
-    }
-    this.setState({ statements: statements, visible: true });
-
     } catch (err) {
       console.log(err);
     };
-
 }
 /* END DIALOG SECTION */
 
