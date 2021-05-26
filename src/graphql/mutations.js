@@ -11,6 +11,21 @@ export const diyGetRoyDetails = /* GraphQL */ `
     diyGetRoyDetails(input: $input)
   }
 `;
+export const diyGetDefaults = /* GraphQL */ `
+  mutation DiyGetDefaults($input: DiyGetDefaultsInput!) {
+    diyGetDefaults(input: $input)
+  }
+`;
+export const diySaveDefaults = /* GraphQL */ `
+  mutation DiySaveDefaults($input: DiySaveDefaultsInput!) {
+    diySaveDefaults(input: $input)
+  }
+`;
+export const diyGetDropdowns = /* GraphQL */ `
+  mutation DiyGetDropdowns($input: DiyGetDropdownsInput!) {
+    diyGetDropdowns(input: $input)
+  }
+`;
 export const createTodo = /* GraphQL */ `
   mutation CreateTodo(
     $input: CreateTodoInput!

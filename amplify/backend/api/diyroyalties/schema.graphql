@@ -10,13 +10,38 @@ diyGetRoy(input: DiyGetRoyInput!): String
 
 diyGetRoyDetails(input: DiyGetRoyDetailsInput!): String
     @function(name: "diyGetRoyDetails-${env}"),    
+
+diyGetDefaults(input: DiyGetDefaultsInput!): String
+    @function(name: "diyGetDefaults-${env}"),    
+
+diySaveDefaults(input: DiySaveDefaultsInput!): String
+    @function(name: "diySaveDefaults-${env}"),  
+
+diyGetDropdowns(input: DiyGetDropdownsInput!): String
+    @function(name: "diyGetDropdowns-${env}"),  
+
 }
+
 
 input DiyGetRoyInput {
   clientId: String
   search: String
 }
 
+input DiyGetDefaultsInput {
+  clientId: String
+}
+
+input DiyGetDropdownsInput {
+  clientId: String
+}
+
+input DiySaveDefaultsInput {
+  clientid: String
+  frequency: String
+  ddtype: String
+  lte: String
+}
 
 input DiyGetRoyDetailsInput {
   royToGet: String

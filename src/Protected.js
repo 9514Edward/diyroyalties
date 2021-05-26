@@ -8,7 +8,11 @@ import './App.css';
 import { AppBar, AppBarSection, AppBarSpacer, Avatar, BottomNavigation } from '@progress/kendo-react-layout';
 import { diyGetRoy }  from './graphql/mutations';
 import { diyGetRoyDetails }  from './graphql/mutations';
+import { diyGetDefaults }  from './graphql/mutations';
+import { diyGetDropdowns }  from './graphql/mutations';
 import  MultiSelectAll from './components/MultiSelectAll';
+import  EditGrid from './components/EditGrid';
+import  EditDefaults from './components/EditDefaults';
 import { Window } from '@progress/kendo-react-dialogs';
 
 let kendokaAvatar = 'https://www.telerik.com/kendo-react-ui-develop/images/kendoka-react.png';
@@ -25,6 +29,9 @@ class Protected extends React.Component {
         this.state = {
           result: "No results yet",
           statements: "",
+          statementsettings: "",
+          dropdowns: "",
+          defaults: "",
           selectedOptions: [],
           visible: true,
           events: [],
@@ -59,40 +66,38 @@ class Protected extends React.Component {
 
       }
 
-      findStatements  = async() => {
+      editDefaults  = async() => {
+
         var clientId = '18c67da7-a451-11';
-        var search = '*'
+        this.setState({ clientid: clientId });
         var result;
         try {
     
           var data = await API.graphql(
-    
-            graphqlOperation(diyGetRoy, {
+            graphqlOperation(diyGetDefaults, {
               input: {
-                clientId: clientId,
-                search: search
+                clientId: clientId
               },
               result
             })
           );
           this.setState({ result: "success!" });
-          var obj = data.data.diyGetRoy.toString().replace('{body=','').replace('}','');;
+          var obj = data.data.diyGetDefaults.toString().replace('{defaults=','').replace('}','');;
           var records = JSON.parse(obj);
-          var statement = {
+          var thisdefault = {
             "label": "All",
             "value": "*"
           };
-          var statements = []
+          var defaults = []
        //   statements.push(statement);
-          statements.statement = statement;
-          for (var key in records) {
-            statement = {
-              "label": records[key][3],
-              "value": records[key][1]
-            }
-            statements.push(statement);
-          }
-          this.setState({ statements: statements, visible: true });
+          defaults.thisdefault = thisdefault;
+            thisdefault = [{
+              "LTE": records[0],
+              "Frequency": records[1],
+              "Type": records[2],
+          }]
+          defaults.push(thisdefault);
+          this.setState({ defaults:defaults, visible: true });
     
           } catch (err) {
             console.log(err);
@@ -100,8 +105,134 @@ class Protected extends React.Component {
         };	
 
 
+        getDropdowns  = async() => {
+
+          var clientId = '18c67da7-a451-11';
+          var result;
+          try {
+      
+            var data = await API.graphql(
+              graphqlOperation(diyGetDropdowns, {
+                input: {
+                  clientId: clientId
+                },
+                result
+              })
+            );
+            this.setState({ result: "success!" });
+            var obj = data.data.diyGetDropdowns.toString().replace('{dropdowns=','').replace('}','');;
+            var records = JSON.parse(obj);
+            var dropdowns = [];
+            var dropdown = {};
+              
+         //   statements.push(statement);
+            dropdowns.dropdown = dropdown;
+            for (var key in records) {
+              dropdown = {
+                "category": records[key][0],
+                "label": records[key][2],
+                "value": records[key][3]
+              }
+              dropdowns.push(dropdown);
+            }
+            this.setState({ dropdowns:dropdowns  });
+            } catch (err) {
+              console.log(err);
+            };
+          };
 
 
+        findStatements  = async() => {
+          document.body.classList.add('busy-cursor');
+          this.setState({ statementsettings: "" });
+          var clientId = '18c67da7-a451-11';
+          var search = '*'
+          var result;
+          try {
+      
+            var data = await API.graphql(
+      
+              graphqlOperation(diyGetRoy, {
+                input: {
+                  clientId: clientId,
+                  search: search
+                },
+                result
+              })
+            );
+            this.setState({ result: "success!" });
+            var obj = data.data.diyGetRoy.toString().replace('{body=','').replace('}','');;
+            var records = JSON.parse(obj);
+            var statement = {
+              "label": "All",
+              "value": "*"
+            };
+            var statements = []
+         //   statements.push(statement);
+            statements.statement = statement;
+            for (var key in records) {
+              statement = {
+                "label": records[key][3],
+                "value": records[key][1]
+              }
+              statements.push(statement);
+            }
+            this.setState({ statements: statements, visible: true });
+      
+            } catch (err) {
+              console.log(err);
+              document.body.classList.remove('busy-cursor');
+            };
+            document.body.classList.remove('busy-cursor');
+          };	
+  
+          statementSettings  = async() => {
+            document.body.classList.add('busy-cursor');
+            this.setState({ statements: "" });
+            var clientId = '18c67da7-a451-11';
+            var search = '*'
+            var result;
+            try {
+        
+              var data = await API.graphql(
+        
+                graphqlOperation(diyGetRoy, {
+                  input: {
+                    clientId: clientId,
+                    search: search
+                  },
+                  result
+                })
+              );
+              this.setState({ result: "success!" });
+              var obj = data.data.diyGetRoy.toString().replace('{body=','').replace('}','');;
+              var records = JSON.parse(obj);
+              var statementsetting = {
+                "label": "All",
+                "value": "*"
+              };
+              var statementsettings = []
+           //   statements.push(statement);
+              statementsettings.statementsetting = statementsetting;
+              for (var key in records) {
+                statementsetting = {
+                  "label": records[key][3],
+                  "value": records[key][1]
+                }
+                statementsettings.push(statementsetting);
+              }
+              this.setState({ statementsettings: statementsettings, visible: true });
+        
+              } catch (err) {
+                console.log(err);
+                document.body.classList.remove('busy-cursor');
+              };
+              document.body.classList.remove('busy-cursor');
+            };	
+    
+
+
+ 
 /* BEGIN DIALOG SECTION */
 toggleDialog = () => {
   if (this.state.visible) {
@@ -118,7 +249,8 @@ toggleDialog = () => {
 }
 runStatements =  async() => {
   var result;
-  var endDate = new Date(2020, 12, 31);
+  this.setState({ statementsettings: "" });
+  var endDate = "2020-06-30";
   if (this.state.visible) {
       this.setState({
           visible: !this.state.visible
@@ -146,10 +278,16 @@ runStatements =  async() => {
        var returnval = data.data.diyGetRoyDetails.toString().replace('{settings=','').replace('}','');
        
        var settings = returnval.split("invoices=")[0].replace('], ', ']');
-       var invoices = returnval.split("invoices=")[1];
+       var invoices = returnval.split("invoices=")[1].split(", priorsales")[0];
+       var priorsales = returnval.split("priorsales=")[1].split(", royaltyrates=")[0];
+       var royaltyrates = returnval.split("royaltyrates=")[1].split(", startingpoint=")[0];
+       var startingpoint = returnval.split("startingpoint=")[1];
        var settingsJson = JSON.parse(settings);
        var invoicesJson = JSON.parse(invoices);
-       alert(invoicesJson);
+       var priorsalesJson = JSON.parse(priorsales);
+       var royaltyratesJson = JSON.parse(royaltyrates);
+       var startingpointJson = JSON.parse(startingpoint);
+       alert(startingpointJson);
       }
     } catch (err) {
       console.log(err);
@@ -161,6 +299,7 @@ runStatements =  async() => {
         componentDidMount()  {
           let _Auth = Auth;
           this.getUser();
+          this.getDropdowns();
         
         }
               
@@ -169,7 +308,8 @@ runStatements =  async() => {
        const modes = ["static", "sticky", "fixed"];
        const { match, location, history } = this.props
        const {
-        statements
+        statements,
+        statementsettings
       } = this.state;
 
 
@@ -187,7 +327,7 @@ runStatements =  async() => {
             <AppBarSpacer style={{ width: 4 }} />
   
             <AppBarSection>
-              <h1 className="title">RoyaltyRun</h1>
+              <h1 className="title">DIY Royalties</h1>
             </AppBarSection>
   
             <AppBarSpacer style={{ width: 32 }} />
@@ -196,6 +336,10 @@ runStatements =  async() => {
               <ul>
                 <li><span>What's New</span></li>
                 <li><span>About</span></li>
+                <li><span><a href="#" onClick={this.editCompany}>Company</a></span></li>
+                <li><span><a href="#" onClick={this.statementSettings}>Statement Settings</a></span></li>
+                <li><span><a href="#" onClick={this.editDefaults}>Defaults</a></span></li>
+                <li><span><a href="#" onClick={this.editTemplates}>Templates</a></span></li>
                 <li><span><a href="#" onClick={this.findStatements}>Run</a></span></li>
               </ul>
             </AppBarSection>
@@ -258,9 +402,12 @@ runStatements =  async() => {
           <blockquote>
         {this.state.statements.length > 0  && this.state.visible &&
         <form ref={this.windowRef} >
-
               <MultiSelectAll  data={this.state} />
-
+          </form>
+        }
+       {this.state.statementsettings.length > 0  && this.state.visible &&
+        <form ref={this.windowRef} >
+            <EditGrid />
               <div className="align-bottom">
                 <button type="button" className="k-button" onClick={this.toggleDialog}>Cancel</button>
                 <button  type="button" className="k-button k-primary" onClick={this.runStatements}>Submit</button>
@@ -268,13 +415,20 @@ runStatements =  async() => {
 
  
           </form>
+        }        
+        {this.state.defaults.length > 0  && this.state.visible &&
+        <form ref={this.windowRef} >
+
+              <EditDefaults  data={this.state} />
+ 
+          </form>
         }
-        
         
 
                
         </blockquote>
         </div>
+
           </div>
 
       );

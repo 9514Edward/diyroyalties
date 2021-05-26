@@ -22,7 +22,19 @@
         },
         "diyGetRoyDetails": {
           "deploymentBucketName": "amplify-diyroyalties-staging-35647-deployment",
-          "s3Key": "amplify-builds/diyGetRoyDetails-2b7a3364306c4a6a3731-build.zip"
+          "s3Key": "amplify-builds/diyGetRoyDetails-4152436453344359554b-build.zip"
+        },
+        "diyGetDefaults": {
+          "deploymentBucketName": "amplify-diyroyalties-staging-35647-deployment",
+          "s3Key": "amplify-builds/diyGetDefaults-636e6e6154725455352b-build.zip"
+        },
+        "diyGetDropdowns": {
+          "deploymentBucketName": "amplify-diyroyalties-staging-35647-deployment",
+          "s3Key": "amplify-builds/diyGetDropdowns-6e475876424a714d4a67-build.zip"
+        },
+        "diySaveDefaults": {
+          "deploymentBucketName": "amplify-diyroyalties-staging-35647-deployment",
+          "s3Key": "amplify-builds/diySaveDefaults-4e344366614b65525336-build.zip"
         }
       }
     }
