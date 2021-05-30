@@ -26,6 +26,11 @@ export const diyGetDropdowns = /* GraphQL */ `
     diyGetDropdowns(input: $input)
   }
 `;
+export const diyGetStatementSettings = /* GraphQL */ `
+  mutation DiyGetStatementSettings($input: DiyGetStatementSettingsInput!) {
+    diyGetStatementSettings(input: $input)
+  }
+`;
 export const createTodo = /* GraphQL */ `
   mutation CreateTodo(
     $input: CreateTodoInput!

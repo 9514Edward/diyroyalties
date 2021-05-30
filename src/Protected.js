@@ -7,6 +7,7 @@ import ReactMultiSelectCheckboxes from 'react-multiselect-checkboxes';
 import './App.css';
 import { AppBar, AppBarSection, AppBarSpacer, Avatar, BottomNavigation } from '@progress/kendo-react-layout';
 import { diyGetRoy }  from './graphql/mutations';
+import { diyGetStatementSettings }  from './graphql/mutations';
 import { diyGetRoyDetails }  from './graphql/mutations';
 import { diyGetDefaults }  from './graphql/mutations';
 import { diyGetDropdowns }  from './graphql/mutations';
@@ -30,16 +31,22 @@ class Protected extends React.Component {
           result: "No results yet",
           statements: "",
           statementsettings: "",
+          royaltyrates: "",
+          summary: "",
           dropdowns: "",
           defaults: "",
           selectedOptions: [],
           visible: true,
           events: [],
           windowRef: this.windowRef
+
+
+
+          
           
         };
 
-
+ 
 
       };
     
@@ -69,7 +76,7 @@ class Protected extends React.Component {
       editDefaults  = async() => {
 
         var clientId = '18c67da7-a451-11';
-        this.setState({ clientid: clientId });
+        this.setState({ clientid: clientId, statementsettings: "" });
         var result;
         try {
     
@@ -188,7 +195,7 @@ class Protected extends React.Component {
   
           statementSettings  = async() => {
             document.body.classList.add('busy-cursor');
-            this.setState({ statements: "" });
+            this.setState({ statements: "", defaults: "" });
             var clientId = '18c67da7-a451-11';
             var search = '*'
             var result;
@@ -196,32 +203,24 @@ class Protected extends React.Component {
         
               var data = await API.graphql(
         
-                graphqlOperation(diyGetRoy, {
+                graphqlOperation(diyGetStatementSettings, {
                   input: {
-                    clientId: clientId,
-                    search: search
+                    clientId: clientId
                   },
                   result
                 })
               );
               this.setState({ result: "success!" });
-              var obj = data.data.diyGetRoy.toString().replace('{body=','').replace('}','');;
-              var records = JSON.parse(obj);
-              var statementsetting = {
-                "label": "All",
-                "value": "*"
-              };
-              var statementsettings = []
-           //   statements.push(statement);
-              statementsettings.statementsetting = statementsetting;
-              for (var key in records) {
-                statementsetting = {
-                  "label": records[key][3],
-                  "value": records[key][1]
-                }
-                statementsettings.push(statementsetting);
-              }
-              this.setState({ statementsettings: statementsettings, visible: true });
+              var returnval = data.data.diyGetStatementSettings.toString().replace('{statements=','').replace('}','');
+       
+              var statements = returnval.split("royaltyrates=")[0].replace(']], ', ']]');
+              var royaltyrates = returnval.split("royaltyrates=")[1].split(", summary")[0];
+              var summary = returnval.split("summary=")[1]
+              var statementsJson = JSON.parse(statements);
+              var royaltyratesJson = JSON.parse(royaltyrates);
+              var summaryJson = JSON.parse(summary);
+
+              this.setState({ statementsettings: statementsJson, royaltyrates: royaltyratesJson, summary: summaryJson, visible: true });
         
               } catch (err) {
                 console.log(err);
@@ -407,7 +406,7 @@ runStatements =  async() => {
         }
        {this.state.statementsettings.length > 0  && this.state.visible &&
         <form ref={this.windowRef} >
-            <EditGrid />
+            <EditGrid  data={this.state}  />
               <div className="align-bottom">
                 <button type="button" className="k-button" onClick={this.toggleDialog}>Cancel</button>
                 <button  type="button" className="k-button k-primary" onClick={this.runStatements}>Submit</button>

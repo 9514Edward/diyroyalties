@@ -1,64 +1,38 @@
 [
-	{
-		"orderID": 10271,
-		"customerID": "SPLIR",
-		"Title": "Ancient Forests",
-        "Contributor": "Joice Harrington",
-		"PublicationDate": "2018-09-25",
-        "FinalStatementDate": "",
-		"ISBN": "9780789201666",
-		"shippedDate": "1996-08-30 00:00:00.000",
-		"shipVia": 2,
-		"freight": 4.54,
-		"shipName": "Split Rail Beer & Ale",
-		"shipAddress": {
-			"street": "P.O. Box 555",
-			"city": "Lander",
-			"region": "WY",
-			"postalCode": 82520,
-			"country": "USA"
-		},
-		"details": [
-			{
-				"SaleType": "Domestic",
-				"IsReservee": true,
-				"Cuttoff1": 50,
-				"Rate1": 13,
-				"Cuttoff2": 60,
-				"Rate2": 7.5,
-				"Cuttoff3": 100,
-				"Rate4": 5
-			},
-			{
-				"SaleType": "Canada",
-				"IsReservee": true,
-				"Cuttoff1": 100,
-				"Rate1": 7.5,
-				"Cuttoff2": 0,
-				"Rate2": 0,
-				"Cuttoff3": 0,
-				"Rate4": 0
-			},
-			{
-				"SaleType": "Euro. Dist.",
-				"IsReservee": false,
-				"Cuttoff1": 100,
-				"Rate1": 7.5,
-				"Cuttoff2": 0,
-				"Rate2": 0,
-				"Cuttoff3": 0,
-				"Rate4": 0
-			},
-			{
-				"SaleType": "Export",
-				"IsReservee": false,
-				"Cuttoff1": 100,
-				"Rate1": 7.5,
-				"Cuttoff2": 0,
-				"Rate2": 0,
-				"Cuttoff3": 0,
-				"Rate4": 0
-			}
-		]
-	}
+  {
+    "customerID": "10872872",
+    "Title": "9780789204844",
+    "ISBN": "70 Years of The Oscar",
+    "orderID": "1",
+    "details": [
+      {
+        "SaleType": "Canada",
+        "IsReservee": true,
+        "Cuttoff1": 100,
+        "Rate1": 7.5,
+        "Cuttoff2": 0,
+        "Rate2": 0,
+        "Cuttoff3": 0,
+        "Rate4": 0
+      }
+    ]
+  },
+  {
+    "customerID": "74942226",
+    "Title": "9780789212894",
+    "ISBN": "A Day in the Life of a Boy",
+    "orderID": "2",
+    "details": [
+      {
+        "SaleType": "Canada",
+        "IsReservee": true,
+        "Cuttoff1": 100,
+        "Rate1": 7.5,
+        "Cuttoff2": 0,
+        "Rate2": 0,
+        "Cuttoff3": 0,
+        "Rate4": 0
+      }
+    ]
+  }
 ]

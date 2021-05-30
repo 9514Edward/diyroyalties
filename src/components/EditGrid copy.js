@@ -31,163 +31,89 @@ import {
   IntlService,
 } from "@progress/kendo-react-intl";
 
-const dataState = {
-  skip: 0,
-  take: 10,
-};
+//import options from "./data.js";
 
-const locales = [
-  {
-      language: 'en-US',
-      locale: 'en'
-  },
-  {
-      language: 'es-ES',
-      locale: 'es'
-  }
-]
+const EditGrid = (props) => {
+  const [selectedOptions, setSelectedOptions] = useState([]);
 
-
-
-export class EditGrid extends React.Component {
-
+  const locales = [
+    {
+      language: "en-US",
+      locale: "en",
+    },
+    {
+      language: "es-ES",
+      locale: "es",
+    },
+  ];
+  const [dataState, setDataState] = React.useState({
+    skip: 0,
+    take: 20,
+    sort: [
+      {
+        field: "orderDate",
+        dir: "desc",
+      },
+    ],
+    group: [
+      {
+        field: "customerID",
+      },
+    ],
+  });
+ 
+  const [currentLocale, setCurrentLocale] = React.useState(locales[0]);
   
+  const [dataResult, setDataResult] = React.useState(
+    process(orders, dataState)
+  );
 
+  const dataStateChange = (event) => {
+    setDataResult(process(orders, event.dataState));
+    setDataState(event.dataState);
+  };
 
-constructor(props) {
-    super(props);
-    
-    var Summaries = [];
-    var SummariesArray;
-    var SUM = {};
-    var Details = [];
-    var detail ;
-    var title = "";
-    var ISBN = "";
-    var counter = 1;
-    var orderID = "";
-    var CustomerID = 0;
-    
-    
-    for (var key in props.data.summary) {
-         SUM = { "customerID" : props.data.summary[key][1].toString().trim(),   "Title" :  props.data.summary[key][3].toString().trim(),  "ISBN":  props.data.summary[key][4].toString().trim(),  "orderID": counter.toString(), "details": [{	"SaleType": "Canada",   "IsReservee": true,    "Cuttoff1": 100,  "Rate1": 7.5,  "Cuttoff2": 0,  "Rate2": 0, "Cuttoff3": 0, "Rate4": 0}]};   
-           counter ++;
-        
-         
-         Summaries.push(SUM);
-         
-    }
-    var test = JSON.stringify(Summaries);
-    var page;
-    var filter;
-
-    
-    this.state = {
-        dataResult: process(Summaries, dataState), 
-        Summaries: Summaries,
-        orders: orders,
-        filter: filter,
-        dataState: dataState,
-        summary: props.data.summary,
-        royaltyrates: props.data.royaltyrates,
-        statementsettings: props.data.statementsettings,
-        currentLocale: locales[0],
-       
-    };
-    
-
-  }
-   
- setPage = (event) => {
-   //dataState sets the pager, dataResult pagess the data
-   this.setState({ dataState: event, dataResult: process(this.state.Summaries, event) });
-    
- }
-
- setFilter = (event) => {
-  //dataState sets the pager, dataResult pagess the data
-  this.setState({ dataState: event.dataState, dataResult: process(this.state.Summaries, event.dataState) });
-   
-}
-
-
-
-expandChange = (event) => {
+  const expandChange = (event) => {
     const isExpanded =
-        event.dataItem.expanded === undefined ?
-            event.dataItem.aggregates : event.dataItem.expanded;
+      event.dataItem.expanded === undefined
+        ? event.dataItem.aggregates
+        : event.dataItem.expanded;
     event.dataItem.expanded = !isExpanded;
+    setDataResult({ ...dataResult });
+  };
+  const handleSubmit = (dataItem) => alert(JSON.stringify(dataItem, null, 2));
 
-    this.setState({ ...this.state });
-}
+  let _pdfExport;
 
-_pdfExport
-exportExcel = () => {
-    this._export.save();
-}
+  const exportExcel = () => {
+    _export.save();
+  };
 
-_export 
-exportPDF = () => {
-    this._pdfExport.save();
-}
+  let _export;
 
-
-
-
-setCurrentLocale = (event) => {
-  this.setState({currentLocale: event});
-
-}
-
-pageChange = (event) =>
- {  
-   
-  this.setPage(event.page);
-};
-  render() {
-    const {
-      hasContent,
-    } = this.state;
-
-const  DetailComponent = (props) => {
+  const exportPDF = () => {
+    _pdfExport.save();
+  };
+  const LTEData = [
+    { label: "Less than or equal to cuttoff (More $ for payee)", value: "phone" },
+    { label: "Less than cuttoff (Less $ for payee)", value: "email" },
+  ];
+  const DetailComponent = (props) => {
     const dataItem = props.dataItem;
-
-    const [currentLocale, setCurrentLocale] = React.useState(locales[0]);
-  
-    const [dataResult, setDataResult] = React.useState(
-      process(this.state.Summaries, this.state.dataState)
-    ); 
-    
-
-
-
-  function  dataStateChange(event) {
-      setDataResult(process(this.state.Summaries, event.dataState));
-      this.setDataState(event.dataState);
-    };
-
-
-    const LTEData = [
-      { label: "Less than or equal to cuttoff (More $ for payee)", value: "phone" },
-      { label: "Less than cuttoff (Less $ for payee)", value: "email" },
-    ];
+    return (
+      <div>
+        <section
+          style={{
+            width: "200px",
+            float: "left",
+          }}
+        > 
 
 
 
-  return (
-    <div>
-      <section
-        style={{
-          width: "200px",
-          float: "left",
-        }}
-      > 
+        </section>
 
-
-
-      </section>
-
-      <Grid
+        <Grid
           style={{
             width: "1000px",
           }}
@@ -195,7 +121,7 @@ const  DetailComponent = (props) => {
           
         />
         <Form
-      onSubmit={this.handleSubmit}
+      onSubmit={handleSubmit}
       render={(formRenderProps) => (
         <FormElement  style={{ maxWidth:1200 }}>
           <fieldset className={"k-form-field-wrap"}>
@@ -296,13 +222,13 @@ const  DetailComponent = (props) => {
   };
 
   return (
-    <LocalizationProvider language={this.state.currentLocale.language}>
-      <IntlProvider locale={this.state.currentLocale.locale}>
+    <LocalizationProvider language={currentLocale.language}>
+      <IntlProvider locale={currentLocale.locale}>
         <div>
           <ExcelExport
-            data={this.state.Summaries}
+            data={orders}
             ref={(exporter) => {
-              this._export = exporter;
+              _export = exporter;
             }}
           >
 
@@ -312,67 +238,66 @@ const  DetailComponent = (props) => {
               }}
               sortable={true}
               filterable={true}
-              filter={this.state.filter}
-              onDataStateChange={(e) => this.setFilter(e)}
               groupable={true}
               reorderable={true}
               pageable={{
                 buttonCount: 4,
                 pageSizes: true,
               }}
-              data={this.state.dataResult}
-              {...this.state.dataState}
-              
+              data={dataResult}
+              {...dataState}
+              onDataStateChange={dataStateChange}
               detail={DetailComponent}
               expandField="expanded"
-              onExpandChange={this.expandChange}
-              total={this.state.Summaries.length}
-              
-              onPageChange={this.pageChange}
+              onExpandChange={expandChange}
             >
+
+
+
+
+
 
               <GridToolbar>
                 Locale:&nbsp;&nbsp;&nbsp;
                 <DropDownList
-                  value={this.currentLocale}
+                  value={currentLocale}
                   textField="language"
                   onChange={(e) => {
-                    this.setCurrentLocale(e.target.value);
+                    setCurrentLocale(e.target.value);
                   }}
-                  data={this.locales}
+                  data={locales}
                 />
                 &nbsp;&nbsp;&nbsp;
                 <button
                   title="Export to Excel"
                   className="k-button k-primary"
-                  onClick={this.exportExcel}
+                  onClick={exportExcel}
                 >
                   Export to Excel
                 </button>
                 &nbsp;
-                <button className="k-button k-primary" onClick={this.exportPDF}>
+                <button className="k-button k-primary" onClick={exportPDF}>
                   Export to PDF
                 </button>
               </GridToolbar>
-              
-              <GridColumn field="ISBN"  width="200px" />
+              <GridColumn field="Title" width="200px" />
               <GridColumn field="Contributor" width="280px" />
-              <GridColumn field="Title" width="800px" />
+              <GridColumn field="ISBN"  width="800px" />
 
             </Grid>
           </ExcelExport>
           
           <GridPDFExport
             ref={(element) => {
-              this._pdfExport = element;
+              _pdfExport = element;
             }}
             margin="1cm"
           >
             {
               <Grid
-                data={process(this.state.Summaries, {
-                  skip: this.state.dataState.skip,
-                  take: this.state.dataState.take,
+                data={process(orders, {
+                  skip: dataState.skip,
+                  take: dataState.take,
                 })}
               >
                 <GridColumn field="customerID" width="200px" />
@@ -391,5 +316,6 @@ const  DetailComponent = (props) => {
     </LocalizationProvider>
   );
 };
-}
+
 export default EditGrid;
+

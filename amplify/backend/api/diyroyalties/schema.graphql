@@ -20,6 +20,9 @@ diySaveDefaults(input: DiySaveDefaultsInput!): String
 diyGetDropdowns(input: DiyGetDropdownsInput!): String
     @function(name: "diyGetDropdowns-${env}"),  
 
+diyGetStatementSettings(input: DiyGetStatementSettingsInput!): String
+    @function(name: "diyGetStatementSettings-${env}"),  
+
 }
 
 
@@ -33,6 +36,10 @@ input DiyGetDefaultsInput {
 }
 
 input DiyGetDropdownsInput {
+  clientId: String
+}
+
+input DiyGetStatementSettingsInput {
   clientId: String
 }
 

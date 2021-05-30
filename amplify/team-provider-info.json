@@ -26,7 +26,7 @@
         },
         "diyGetDefaults": {
           "deploymentBucketName": "amplify-diyroyalties-staging-35647-deployment",
-          "s3Key": "amplify-builds/diyGetDefaults-636e6e6154725455352b-build.zip"
+          "s3Key": "amplify-builds/diyGetDefaults-665a32475659734e4762-build.zip"
         },
         "diyGetDropdowns": {
           "deploymentBucketName": "amplify-diyroyalties-staging-35647-deployment",
@@ -34,7 +34,11 @@
         },
         "diySaveDefaults": {
           "deploymentBucketName": "amplify-diyroyalties-staging-35647-deployment",
-          "s3Key": "amplify-builds/diySaveDefaults-4e344366614b65525336-build.zip"
+          "s3Key": "amplify-builds/diySaveDefaults-49414d677a6764376574-build.zip"
+        },
+        "diyGetStatementSettings": {
+          "deploymentBucketName": "amplify-diyroyalties-staging-35647-deployment",
+          "s3Key": "amplify-builds/diyGetStatementSettings-4168304e676858744f6c-build.zip"
         }
       }
     }

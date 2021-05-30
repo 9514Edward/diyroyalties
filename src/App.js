@@ -22,12 +22,23 @@ Amplify.configure(aws_exports);
 class App extends React.Component {
   
   constructor(props) {
-    super(props);
-    this.state = {
-      result: "No results yet"
+
+    const initialDataState = {
+      skip: 0,
+      take: 10,
     };
+    
+
+
+
+
 
   };
+
+
+  
+
+
 
   hi = async() => {
     alert('hi');

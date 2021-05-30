@@ -147,11 +147,123 @@ class EditDefaults extends React.Component {
   }
   
 
+  render() {
+    const {
+      hasContent,
+    } = this.state;
+
  
 
 
+    return (
+      <Form
+      onSubmit={this.handleSubmit}
+      //setState={setSelectedOptions}
+      initialValues={{
+        LTE: this.defaults[0][0].LTE,
+        Frequency: this.defaults[0][0].Frequency,
+        Type: this.defaults[0][0].Type
 
+      }}
+      render={( formRenderProps, allowSubmit, reset, submitting, pristine, values, valid, state) => (
+        <FormElement  style={{ maxWidth: 500, margin:"1%" }}>
+          <fieldset className={"k-form-field-wrap"}>
+          <Field
+                name={"LTE"}
+                component={Input}
+                ref={"LTE"}
+                type={"radio"}
+                label={"Less than or equal to"}
+                hint={"Sales at a discount of less than or equal to the cuttoff will result in higher payment to contributor."}
+                component={FormRadioGroup}
+                onChange={this.handleChange}
+                data={this.LTEs}
+
+
+          />
+          <DropDownList
+                name={"Frequency"}
+                component={Input}
+                label={"Statement Frequency"}
+                hint={"Default value for the frequency of statements"}
+                onChange={this.handleChange}
+                data={this.Frequencies}
+                value={this.state.frequency}
+
+
+          />
+
+          <DropDownList
+                name={"Type"}
+                component={Input}
+                label={"Type"}
+                hint={"Payments to be based on..."}
+                onChange={this.handleChange}
+                data={this.DDTypes}
+                value={this.state.ddtype}
+
+          />
+<div className="k-form-buttons">
+          <Button
+              className="k-button  k-primary"
+              type="button"
+              onClick={this.handleSubmit}
+             // disabled={!formRenderProps.allowSubmit}
+          >
+            Save
+         </Button>
+</div>
+</fieldset>
+
+      <NotificationGroup
+      style={{
+        bottom: 0,
+        right: "50%",
+        alignItems: "flex-start",
+        flexWrap: "wrap-reverse",
+      }}
+    >
+      <Fade>
+        {this.state.success && (
+          <Notification
+            type={{
+              style: "success",
+              icon: true,
+            }}
+            closable={true}
+            onClose={setTimeout(() => {
+              this.setState({ success: false });
+            }, 3000) }
+          >
+            <span>Your data has been saved.</span>
+          </Notification>
+        )}
+      </Fade>
+      <Fade>
+        {this.state.error && (
+          <Notification
+            type={{
+              style: "error",
+              icon: true,
+            }}
+            closable={true}
+            onClose={setTimeout(() => {
+              this.setState({ error: false });
+            }, 3000) }
+          >
+            <span>Error saving data.</span>
+          </Notification>
+        )}
+      </Fade>
+    </NotificationGroup>    
+    </FormElement>    
+      )}
+    />
+
+    
+
+    );
   };
   
-
+}
 export default EditDefaults;
